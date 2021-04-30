@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class BmiEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
-    var tgl: Long = System.currentTimeMillis(),
+    var tanggal: Long = System.currentTimeMillis(),
     var berat: Float,
     var tinggi: Float,
     var isMale: Boolean

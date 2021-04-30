@@ -18,19 +18,16 @@ class HitungViewModel(private val db: BmiDao) : ViewModel() {
     //navigasi akan bernilai null ketika tidak bernavigasi
     private val navigasi = MutableLiveData<KategoriBmi?>()
 
-    //Variable ini sudah berupa LiveData (tidal mutable, sehingga tidak perlu dijadikan private
-    val data = db.getLastBmi()
-
-    fun hitungBmi(berat: String, tinggi: String, isMale: Boolean){
-        val tinggiCm = tinggi.toFloat()/100
+    fun hitungBmi(berat: String, tinggi: String, isMale: Boolean) {
+        val tinggiCm = tinggi.toFloat() / 100
         val bmi = berat.toFloat() / (tinggiCm * tinggiCm)
-        val kategori = if (isMale){
-            when{
+        val kategori = if (isMale) {
+            when {
                 bmi < 20.5 -> KategoriBmi.KURUS
-                bmi >=27.0 -> KategoriBmi.GEMUK
+                bmi >= 27.0 -> KategoriBmi.GEMUK
                 else -> KategoriBmi.IDEAL
             }
-        } else {
+        }else {
             when {
                 bmi < 18.5 -> KategoriBmi.KURUS
                 bmi >= 25.0 -> KategoriBmi.GEMUK
@@ -38,7 +35,6 @@ class HitungViewModel(private val db: BmiDao) : ViewModel() {
             }
         }
         hasilBmi.value = HasilBmi(bmi, kategori)
-
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 val dataBmi = BmiEntity(

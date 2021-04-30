@@ -7,10 +7,8 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import org.d3if4046.hitungbmi.R
 import org.d3if4046.hitungbmi.data.KategoriBmi
@@ -52,10 +50,6 @@ class HitungFragment : Fragment() {
             binding.buttonGroup.visibility = View.VISIBLE
         })
 
-        viewModel.data.observe(viewLifecycleOwner, {
-            if (it == null) return@observe
-            Log.d("Hitung Fragment", "Data tersimpan. ID = ${it.id}")
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -109,15 +103,15 @@ class HitungFragment : Fragment() {
         else
             getString(R.string.wanita)
         val  message = getString(R.string.bagikan_template, binding.beratEditText.text,
-                        binding.tinggiEditText.text, gender,
-                        binding.bmiTextView.text, binding.kategoriTextView.text)
+            binding.tinggiEditText.text, gender,
+            binding.bmiTextView.text, binding.kategoriTextView.text)
 
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.setType("text/plain").putExtra(Intent.EXTRA_TEXT, message)
         if (shareIntent.resolveActivity(
                 requireActivity().packageManager) !=null) {
-                    startActivity(shareIntent)
-            }
+            startActivity(shareIntent)
+        }
     }
 
     private fun getKategori(kategori: KategoriBmi): String {
