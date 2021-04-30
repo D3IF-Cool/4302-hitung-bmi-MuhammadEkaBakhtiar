@@ -6,19 +6,19 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [BmiEntity::class], version = 1, exportSchema = false)
-abstract class BmiDb : RoomDatabase(){
 
+abstract class BmiDb: RoomDatabase() {
     abstract val dao: BmiDao
 
     companion object{
         @Volatile
-        private  var INSTANCE: BmiDb? = null
+        private var INSTANCE: BmiDb? = null
 
-        fun getInstance(context: Context) {
-            synchronized(this) {
+        fun getInstance(context: Context): BmiDb{
+            synchronized(this){
                 var instance = INSTANCE
 
-                if(instance == null){
+                if (instance == null){
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         BmiDb::class.java,
@@ -28,6 +28,7 @@ abstract class BmiDb : RoomDatabase(){
                         .build()
                     INSTANCE = instance
                 }
+                return instance
             }
         }
     }
